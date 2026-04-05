@@ -13,6 +13,7 @@ FROM alpine:latest
 
 WORKDIR /app
 COPY --from=builder /app/rate_limiter_server .
+COPY ./public ./public
 
 EXPOSE 8080
 CMD ["./rate_limiter_server"]

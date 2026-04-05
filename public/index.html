@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rate Limiter Console</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Outfit:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-mesh"></div>
+    <div class="app-container">
+        <header class="glass-header">
+            <h1>Rate Limiter<span class="highlight"> Console</span></h1>
+            <div class="status-indicator">
+                <div class="dot pulse"></div>
+                <span>Gateway Active</span>
+            </div>
+        </header>
+
+        <main class="dashboard">
+            <!-- Left Pane: API Tester -->
+            <section class="card glass-panel" id="tester-pane">
+                <h2>API Intercept <span>(POST /check)</span></h2>
+                <p class="subtitle">Fire simulated payloads against configured limits.</p>
+                
+                <form id="check-form">
+                    <div class="input-group">
+                        <label for="c-endpoint">Endpoint</label>
+                        <input type="text" id="c-endpoint" value="/api/v1/critical" required>
+                    </div>
+                    <div class="row">
+                        <div class="input-group">
+                            <label for="c-userid">User ID</label>
+                            <input type="text" id="c-userid" value="usr_X890" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="c-ip">IP Address</label>
+                            <input type="text" id="c-ip" value="192.168.1.10" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn primary">Fire Request</button>
+                </form>
+
+                <div class="response-display" id="response-box">
+                    <h3>Response Intercept</h3>
+                    <div class="metrics">
+                        <div class="metric">
+                            <span class="label">Status</span>
+                            <span class="value" id="res-status">--</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">Remaining</span>
+                            <span class="value" id="res-remaining">--</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">Retry After</span>
+                            <span class="value" id="res-retry">--</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Pane: Active Config -->
+            <section class="card glass-panel" id="config-pane">
+                <h2>Active Routing Rules <span>(GET /config)</span></h2>
+                <div class="rule-list" id="rule-list">
+                    <!-- Rules injected dynamically here -->
+                    <div class="loading">Fetching rules from datastore...</div>
+                </div>
+
+                <div class="divider"></div>
+
+                <h2>Deploy New Rule <span>(POST /config)</span></h2>
+                <form id="config-form">
+                    <div class="row">
+                        <div class="input-group">
+                            <label for="r-id">Rule ID</label>
+                            <input type="text" id="r-id" placeholder="e.g. strict_api" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="r-dim">Dimension</label>
+                            <select id="r-dim">
+                                <option value="endpoint">Endpoint</option>
+                                <option value="user">User ID</option>
+                                <option value="ip">IP Address</option>
+                                <option value="global">Global</option>
+                            </select>
+                        </div>
+                    </div>
+                     <div class="row">
+                        <div class="input-group">
+                            <label for="r-match">Match String</label>
+                            <input type="text" id="r-match" placeholder="e.g. /api/v1/*" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="r-strat">Algorithm</label>
+                            <select id="r-strat">
+                                <option value="fixed_window">Fixed Window</option>
+                                <option value="sliding_window">Sliding Window</option>
+                                <option value="token_bucket">Token Bucket</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-group">
+                            <label for="r-rate">Rate (Limit)</label>
+                            <input type="number" id="r-rate" value="10" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="r-period">Period (Sec)</label>
+                            <input type="number" id="r-period" value="60" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn secondary">Deploy to Manager</button>
+                    <div class="admin-notice">Requires 'secret-admin-token'</div>
+                </form>
+            </section>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

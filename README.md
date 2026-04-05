@@ -47,6 +47,14 @@ colima start # (If running MacOS)
 docker-compose up --build -d
 ```
 
+## Live Interactive Dashboard
+
+We built an integrated Glassmorphism UI that automatically deploys via Docker alongside the API backend natively over port `8080`. No massive Javascript frameworks required.
+
+![Dashboard Demonstration](assets/dashboard.png)
+
+*Access the dashboard at `http://localhost:8080/dashboard` to instantly start simulating API limits against the Redis node!*
+
 ## REST API Integration
 
 The core rate limiter operates on port `:8080`.

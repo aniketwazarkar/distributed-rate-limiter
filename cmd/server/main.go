@@ -43,6 +43,25 @@ func main() {
 
 	r := gin.Default()
 
+	// Handle CORS for local/dashboard testing
+	r.Use(func(c *gin.Context) {
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(204)
+			return
+		}
+		c.Next()
+	})
+
+	// Serve the Frontend Dashboard
+	r.Static("/dashboard", "./public")
+	// Forward root to dashboard
+	r.GET("/", func(c *gin.Context) {
+		c.Redirect(http.StatusMovedPermanently, "/dashboard/")
+	})
+
 	// Metric exposure
 	r.GET("/metrics", gin.WrapH(promhttp.Handler()))
 
