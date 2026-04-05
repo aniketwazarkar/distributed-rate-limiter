@@ -1,0 +1,22 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+server.log
+rate_limiter_server
+
+# Test output
+test_api.sh
+
+# Go workspace file
+go.work
+
+# Environment variables
+.env
+
+# Docker volumes / hidden files
+.DS_Store
+.idea/
+.vscode/

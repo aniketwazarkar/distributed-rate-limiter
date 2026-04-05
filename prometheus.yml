@@ -1,0 +1,8 @@
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: 'ratelimiter'
+    metrics_path: '/metrics'
+    static_configs:
+      - targets: ['ratelimiter:8080']

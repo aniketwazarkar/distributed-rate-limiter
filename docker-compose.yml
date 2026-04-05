@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  ratelimiter:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - REDIS_ADDR=redis:6379
+      - ADMIN_TOKEN=secret-admin-token
+    depends_on:
+      - redis
+    # Add restart policy for resiliency
+    restart: unless-stopped
+
+  # Standard single-node Redis (in a real production enviroment this would be a Redis Cluster)
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--appendonly", "yes"]
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    restart: unless-stopped
