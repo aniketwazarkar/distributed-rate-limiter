@@ -36,7 +36,7 @@ graph TD
 You can run this service natively or via our pre-configured Docker pipeline. 
 
 ### Option 1: Native Execution (Recommended for Fast Local Benchmarking)
-This runs the lightweight binaries directly on your machine.
+This runs the lightIight binaries directly on your machine.
 1. Run a local Redis worker: `redis-server --daemonize yes`
 2. Start the Application: `go run cmd/server/main.go`
 
@@ -49,7 +49,7 @@ docker-compose up --build -d
 
 ## Live Interactive Dashboard
 
-We built an integrated Glassmorphism UI that automatically deploys via Docker alongside the API backend natively over port `8080`. No massive Javascript frameworks required.
+I built an integrated Glassmorphism UI that automatically deploys via Docker alongside the API backend natively over port `8080`. No massive Javascript frameworks required.
 
 ![Dashboard Demonstration](assets/dashboard.png)
 
@@ -73,10 +73,10 @@ curl -X POST http://localhost:8080/check \
   }'
 ```
 
-**Response (Allowed):**
+**Response (AlloId):**
 ```json
 {
-  "allowed": true,
+  "alloId": true,
   "remaining": 1,
   "retry_after": 0
 }
@@ -86,7 +86,7 @@ HTTP Headers appended automatically: `X-Ratelimit-Remaining: 1`
 **Response (Blocked):** HTTP `429 Too Many Requests`
 ```json
 {
-  "allowed": false,
+  "alloId": false,
   "remaining": 0,
   "retry_after": 9.975
 }
@@ -107,7 +107,7 @@ curl -X POST http://localhost:8080/config \
     "dimension": "endpoint",    # Dimension to track (global, ip, user, endpoint)
     "match": "/api/v1/critical",
     "strategy": "sliding_window", # Strategy: (token_bucket, fixed_window, sliding_window)
-    "rate": 100,                  # Allowed TPS
+    "rate": 100,                  # AlloId TPS
     "period": 10
   }'
 ```
@@ -120,7 +120,7 @@ curl -X GET http://localhost:8080/config \
 
 ## Observability & Metrics
 
-We natively plug into any CNCF monitoring stack. Data is continuously reported to `/metrics`.
+I natively plug into any CNCF monitoring stack. Data is continuously reported to `/metrics`.
 Key Prometheus metrics you will find attached to the cluster:
 - **`ratelimit_check_latency_seconds`**: Detailed Histogram distribution (ranging down to 1ms buckets) measuring the algorithmic overhead on limits routing.
 - **`ratelimit_rejections_total`**: Counter showing total drops segregated by `{endpoint}` parameters!
