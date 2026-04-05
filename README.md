@@ -40,11 +40,21 @@ This runs the lightIight binaries directly on your machine.
 1. Run a local Redis worker: `redis-server --daemonize yes`
 2. Start the Application: `go run cmd/server/main.go`
 
+```bash
+k6 run scripts/load_test.js // Run the K6 benchmark
+```
+
 ### Option 2: Docker Cluster Deployment
 Use our orchestrated Docker-Compose script which boots the App, a clean Redis node, and a Prometheus scraping engine.
 ```bash
 colima start # (If running MacOS)
 docker-compose up --build -d
+```
+
+```bash
+# Stop the application
+docker-compose down
+colima stop
 ```
 
 ## Live Interactive Dashboard
