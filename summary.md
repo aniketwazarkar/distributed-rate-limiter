@@ -32,7 +32,7 @@ graph TD
     end
     
     subgraph Persistence Layer
-        Node1 -->|Redis Protocol| Cluster{(Redis Datastore Cluster)}
+        Node1 -->|Redis Protocol| Cluster[(Redis Datastore Cluster)]
         Node2 -->|Redis Protocol| Cluster
         NodeN -->|Redis Protocol| Cluster
     end
